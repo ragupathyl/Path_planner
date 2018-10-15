@@ -16,8 +16,8 @@ int main(int argc, char* argv[]) {
         using std::endl;
 
 //Map parameters
-        int row =10;
-        int col=10;
+        int row =20;
+        int col=20;
 //Start and end points
         xy start = {1,1};
         xy end={row-2,col-2};
@@ -26,24 +26,24 @@ int main(int argc, char* argv[]) {
         int ratio=4; //Ratio of empty spaces to each obstacle rounded to nearest integer
         srand (time(NULL));
 //Set verbose option for Planner Class
-        bool verbose = true;
+        bool verbose = false;
 
 
 //Check for command line inputs;
-        if(argc==8){
-          row=atoi(argv[1]);
-          col=atoi(argv[2]);
-          start.x=atoi(argv[3]);
-          start.y=atoi(argv[4]);
-          end.x=atoi(argv[5]);
-          end.y=atoi(argv[6]);
-          std::string flag=argv[7];
-          if(flag.compare("true")==0)verbose=true;
-          if(flag.compare("false")==0)verbose=false;
+        if(argc==8) {
+                row=atoi(argv[1]);
+                col=atoi(argv[2]);
+                start.x=atoi(argv[3]);
+                start.y=atoi(argv[4]);
+                end.x=atoi(argv[5]);
+                end.y=atoi(argv[6]);
+                std::string flag=argv[7];
+                if(flag.compare("true")==0) verbose=true;
+                if(flag.compare("false")==0) verbose=false;
         }
 
 //Declare map variable
-          matrix<char> map(row,col);
+        matrix<char> map(row,col);
 
 //Generate random map
         if(random_map) {
@@ -57,16 +57,26 @@ int main(int argc, char* argv[]) {
         }
 //Or initialize map manually
         else{
-                map <<=0,1,0,0,1,0,0,1,0,0,
-                       0,0,0,0,1,0,1,0,0,0,
-                       0,0,0,1,1,0,0,0,0,0,
-                       0,1,1,1,0,1,0,0,1,0,
-                       0,0,0,0,1,0,1,1,0,0,
-                       0,0,0,1,0,0,0,1,0,0,
-                       1,1,0,1,1,1,1,0,1,1,
-                       0,0,0,0,1,0,0,0,1,0,
-                       0,0,0,1,0,0,0,0,0,0,
-                       0,0,0,0,0,0,0,0,0,0;
+                map <<='1','1','1','0','0','0','0','0','1','0','0','1','0','0','0','0','1','0','0','0',
+                       '1','S','1','0','0','0','0','0','0','0','0','0','0','1','0','0','0','1','1','1',
+                       '0','0','1','0','0','0','0','0','0','0','1','0','0','1','0','1','0','0','1','0',
+                       '0','0','1','1','0','0','0','0','0','0','0','0','1','0','1','0','1','0','0','0',
+                       '0','0','1','1','0','0','0','1','1','0','0','0','1','0','1','1','0','0','0','0',
+                       '0','0','0','0','0','0','0','0','1','1','0','0','0','0','0','0','1','1','0','1',
+                       '0','0','1','0','0','1','0','0','0','0','1','0','0','0','1','1','1','1','0','1',
+                       '1','1','0','0','0','0','0','0','0','1','1','1','0','1','0','0','1','1','1','0',
+                       '0','1','0','1','0','0','1','0','0','0','0','0','0','0','0','1','1','0','1','0',
+                       '0','1','0','1','1','0','0','1','0','0','0','1','0','1','1','0','0','0','1','0',
+                       '0','0','1','1','1','0','1','1','0','1','0','0','1','0','0','1','1','1','1','0',
+                       '0','0','0','0','0','0','0','0','1','0','1','0','0','1','0','0','0','0','0','0',
+                       '1','0','0','1','0','0','0','1','0','0','0','0','1','0','0','1','0','0','0','0',
+                       '0','0','0','1','0','1','0','0','0','1','0','0','0','0','1','0','1','0','0','0',
+                       '0','1','1','0','0','0','0','0','0','0','0','0','1','0','0','0','0','1','1','0',
+                       '1','0','0','0','1','0','0','1','0','1','0','0','1','0','1','0','0','0','0','0',
+                       '1','0','0','1','0','0','0','1','0','0','0','1','0','0','0','0','0','0','0','0',
+                       '0','0','1','0','0','1','0','0','0','1','1','1','0','0','1','0','0','1','0','0',
+                       '0','0','0','0','0','0','1','0','1','0','0','0','0','0','0','0','1','0','G','0',
+                       '0','0','0','0','1','1','0','0','1','0','1','0','0','0','0','0','0','0','1','0';
         }
 
 
@@ -74,15 +84,14 @@ int main(int argc, char* argv[]) {
         Astar_planner obj(verbose);
 
 
-        if(!verbose) {
-                cout<<endl<<"World State:"<<endl;
-                for(int i=0; i<10; i++) {
-                        for(int j=0; j<10; j++) cout<<map(i,j)<<" ";
-                        cout<<endl;
-                }
-        }
 //Call search() and obtain path
         vector<xy> path = obj.search(map,start,end);
+
+
+        if(!verbose) {
+                cout<<endl<<"World State:"<<endl;
+                obj.printworld(map,start,end);
+        }
 
         if(!verbose) {
                 std::cout<<endl<<"Path coordinates in order:"<<endl;

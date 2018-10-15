@@ -107,7 +107,7 @@ boost::numeric::ublas::vector<xy> Astar_planner::search(boost::numeric::ublas::m
                 openlist.pop();
 
                 idx = current.second;
-                //Adding current cell to closedlist
+//Adding current cell to closedlist
                 (*closedlist)(idx)=true;
 
 
@@ -156,9 +156,9 @@ boost::numeric::ublas::vector<xy> Astar_planner::search(boost::numeric::ublas::m
 
                         }
                 }
-                //Checking the cell to the left, Proceed if it the move is valid
+//Checking the cell to the left, Proceed if it the move is valid
                 if(!check_wall(world_state,idx,idx-1)) {
-                        //If goal cell is found, update cellinfo and return tracepath()
+//If goal cell is found, update cellinfo and return tracepath()
                         if(idx-1==goal_idx) {
                                 temp=(cell){idx,g_current+1,0,g_current+1};
                                 cellinfo.insert(pair<int,cell>(idx-1,temp));
@@ -172,14 +172,14 @@ boost::numeric::ublas::vector<xy> Astar_planner::search(boost::numeric::ublas::m
                                 h_current = Hvalue(idx2xy(idx-1));
                                 f_current = g_current+1+h_current;
                                 cell_it=cellinfo.find(idx-1);
-                                //If cell isnt part of cellinfo, add to openlist and add cellinfo
+//If cell isnt part of cellinfo, add to openlist and add cellinfo
                                 if(cell_it==cellinfo.end()) {
                                         openlist.push(make_pair(f_current,idx-1));
                                         temp=(cell){idx,f_current,h_current,g_current+1};
                                         cellinfo.insert(pair<int,cell>(idx-1,temp));
 
                                 }
-                                //If cell is part of cellinfo, check if F(cell) can be updated with new value. Update cellinfo and openlist
+//If cell is part of cellinfo, check if F(cell) can be updated with new value. Update cellinfo and openlist
                                 else if(cell_it->second.f > f_current) {
                                         openlist.push(make_pair(f_current,idx-1));
 
@@ -190,9 +190,9 @@ boost::numeric::ublas::vector<xy> Astar_planner::search(boost::numeric::ublas::m
 
                         }
                 }
-                //Checking the cell below, Proceed if it the move is valid
+//Checking the cell below, Proceed if it the move is valid
                 if(!check_wall(world_state,idx,idx+col)) {
-                        //If goal cell is found, update cellinfo and return tracepath()
+//If goal cell is found, update cellinfo and return tracepath()
                         if(idx+col==goal_idx) {
                                 temp=(cell){idx,g_current+1,0,g_current+1};
                                 cellinfo.insert(pair<int,cell>(idx+col,temp));
@@ -206,14 +206,14 @@ boost::numeric::ublas::vector<xy> Astar_planner::search(boost::numeric::ublas::m
                                 h_current = Hvalue(idx2xy(idx+col));
                                 f_current = g_current+1+h_current;
                                 cell_it=cellinfo.find(idx+col);
-                                //If cell isnt part of cellinfo, add to openlist and add cellinfo
+//If cell isnt part of cellinfo, add to openlist and add cellinfo
                                 if(cell_it==cellinfo.end()) {
                                         openlist.push(make_pair(f_current,idx+col));
                                         temp=(cell){idx,f_current,h_current,g_current+1};
                                         cellinfo.insert(pair<int,cell>(idx+col,temp));
 
                                 }
-                                //If cell is part of cellinfo, check if F(cell) can be updated with new value. Update cellinfo and openlist
+//If cell is part of cellinfo, check if F(cell) can be updated with new value. Update cellinfo and openlist
                                 else if(cell_it->second.f > f_current) {
                                         openlist.push(make_pair(f_current,idx+col));
 
@@ -225,9 +225,9 @@ boost::numeric::ublas::vector<xy> Astar_planner::search(boost::numeric::ublas::m
                         }
                 }
 
-                //Checking the cell above, Proceed if it the move is valid
+//Checking the cell above, Proceed if it the move is valid
                 if(!check_wall(world_state,idx,idx-col)) {
-                        //If goal cell is found, update cellinfo and return tracepath()
+//If goal cell is found, update cellinfo and return tracepath()
                         if(idx-col==goal_idx) {
                                 temp=(cell){idx,g_current+1,0,g_current+1};
                                 cellinfo.insert(pair<int,cell>(idx-col,temp));
@@ -237,18 +237,18 @@ boost::numeric::ublas::vector<xy> Astar_planner::search(boost::numeric::ublas::m
                         }
 //Else if cell isnt part of closedlist, calcualte F(cell)
                         else if((*closedlist)(idx-col)==false) {
-                                //g_current += 1;
+//g_current += 1;
                                 h_current = Hvalue(idx2xy(idx-col));
                                 f_current = g_current+1+h_current;
                                 cell_it=cellinfo.find(idx-col);
-                                //If cell isnt part of cellinfo, add to openlist and add cellinfo
+//If cell isnt part of cellinfo, add to openlist and add cellinfo
                                 if(cell_it==cellinfo.end()) {
                                         openlist.push(make_pair(f_current,idx-col));
                                         temp=(cell){idx,f_current,h_current,g_current+1};
                                         cellinfo.insert(pair<int,cell>(idx-col,temp));
 
                                 }
-                                //If cell is part of cellinfo, check if F(cell) can be updated with new value. Update cellinfo and openlist
+//If cell is part of cellinfo, check if F(cell) can be updated with new value. Update cellinfo and openlist
                                 else if(cell_it->second.f > f_current) {
                                         openlist.push(make_pair(f_current,idx-col));
 

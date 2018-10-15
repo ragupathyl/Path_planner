@@ -48,8 +48,9 @@ boost::numeric::ublas::vector<xy> Random_planner::search(boost::numeric::ublas::
         //Add Start location to path
         path->insert_element(0,current_pose);
 //Random a number between 1-4 to determine next move
-        rand_num=rand()%4+1;
         srand (time(NULL));
+        rand_num=rand()%4+1;
+
 
 //Loop till max_step_number is reached or if loop_count runs over a certain limit
         while(steps<max_step_number && loop_count<5*max_step_number) {
