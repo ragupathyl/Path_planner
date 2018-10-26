@@ -2,7 +2,7 @@
 /* Path_planner libraries- Quick guide  */
 //////////////////////////////////////////
 
-Created by Lakshmi Naarayanan Ragupathy: As part of a coding skill review for Brain Corp.
+Created by Lakshmi Naarayanan Ragupathy:
 
 github link: https://github.com/ragupathyl/Path_planner
 
